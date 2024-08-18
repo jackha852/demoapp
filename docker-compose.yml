@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  demoapp-mysql:
+    container_name: demoapp-mysql
+    image: mysql
+    environment:
+      MYSQL_DATABASE: demoapp
+      MYSQL_ROOT_PASSWORD: demoappdbrootpassword
+      MYSQL_USER: demoappdbuser
+      MYSQL_PASSWORD: demoappdbpassword
+      TZ: UTC
+    ports:
+      - 3306:3306
+    # volumes:
+    #   - ./temp/mysql:/var/lib/mysql
+
+  demoapp-mysql-client:
+    container_name: demoapp-mysql-client
+    image: dbgate/dbgate
+    ports:
+      - 3000:3000
