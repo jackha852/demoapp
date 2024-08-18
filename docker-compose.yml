@@ -1,22 +1,44 @@
 version: "3"
 
 services:
-  demoapp-mysql:
-    container_name: demoapp-mysql
+  mysql:
     image: mysql
     environment:
-      MYSQL_DATABASE: demoapp
       MYSQL_ROOT_PASSWORD: demoappdbrootpassword
+      MYSQL_DATABASE: demoapp
       MYSQL_USER: demoappdbuser
       MYSQL_PASSWORD: demoappdbpassword
       TZ: UTC
     ports:
       - 3306:3306
-    # volumes:
-    #   - ./temp/mysql:/var/lib/mysql
+    restart: unless-stopped
 
-  demoapp-mysql-client:
-    container_name: demoapp-mysql-client
-    image: dbgate/dbgate
+  backend:
+    build: .
+    environment:
+      NODE_ENV: production
+      PORT: 8080
+      DB_TYPE: mysql
+      DB_NAME: demoapp
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USERNAME: demoappdbuser
+      DB_PASSWORD: demoappdbpassword
+      DB_TZ: "+00:00"
+      GOOGLE_MAP_ROUTE_API_HOST: https://routes.googleapis.com/directions/v2:computeRoutes
+      GOOGLE_MAP_ROUTE_API_KEY: demogoogleapikey
+      LOG_LEVEL: info
+    command: sh -c "./wait-for.sh mysql:3306 -- node ./bin/www"
+    # command: ["sleep", "3600"]
     ports:
-      - 3000:3000
+      - 8080:8080
+    depends_on:
+      - mysql
+    restart: unless-stopped
+
+  # dbgate:
+  #   container_name: dbgate
+  #   image: dbgate/dbgate
+  #   ports:
+  #     - 3000:3000
+  #   restart: unless-stopped

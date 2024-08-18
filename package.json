@@ -2,13 +2,13 @@
   "name": "demoapp",
   "version": "1.0.0",
   "scripts": {
-    "start": "npm run prod",
+    "clean": "rimraf dist",
+    "build": "babel ./src --out-dir dist",
     "server": "babel-node ./src/bin/www",
     "server:prod": "node ./dist/bin/www",
     "dev": "npm-run-all server",
+    "start": "npm run prod",
     "prod": "npm-run-all clean build server:prod",
-    "clean": "rimraf dist",
-    "build": "babel ./src --out-dir dist",
     "test:unit": "jest -- unit.test.js",
     "test:intg": "jest -- intg.test.js",
     "watch": "nodemon"
