@@ -2,16 +2,14 @@
 
 This is repo is a demo app about simple backend endpoints built by express.js and MySQL
 
-#### Getting Started
-
-###### Production Environment
+### Production Environment
 
 Prerequisites:
 
 1. NodeJS 22
 1. Docker & Docker Compose
 
-After cloning the repo, to start all compoents, please run:
+After cloning this repo, to start all compoents, please run:
 
 ```sh
 cd project-path/demoapp
@@ -36,7 +34,7 @@ By default, the Google Map API Key is `demogoogleapikey`. When this fake key is 
 
 To applied a real API Key, find and replace `demogoogleapikey` in `docker-compose.yml`
 
-###### Development Environment
+### Development Environment
 
 Prerequisites:
 
